@@ -1,0 +1,107 @@
+body {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 32px;
+  justify-content: center;
+}
+
+#container {
+  width: 95vw;
+  height: 600px;
+  border: 1px solid black;
+  background-color: #1DA2D8;
+  position: relative;
+  overflow: hidden;
+}
+
+.hud {
+  display: flex;
+  width: 95vw;
+  margin-top: 32px;
+  justify-content: space-between;
+}
+
+.ball {
+  width: 20px;
+  height: 20px;
+  background-color: #068413;
+  border-radius: 50%;
+  position: absolute;
+}
+
+.increment {
+  width: 20px;
+  height: 20px;
+  background-color: #00ffa6;
+  border-radius: 50%;
+  position: absolute;
+}
+
+.negative {
+  width: 20px;
+  height: 20px;
+  background-color: #ff0000;
+  border-radius: 50%;
+  position: absolute;
+}
+
+.negative.sac {
+  background-color: #ff5500;
+  transform: scale(1.5);
+}
+
+.negative.filet {
+  background-color: #0066cc;
+  border-radius: 10%;
+}
+
+.negative.requin {
+  background-color: #00cccc;
+}
+
+@keyframes shake {
+  10%, 90% {
+    transform: translate3d(-1px, 0, 0);
+  }
+  20%, 80% {
+    transform: translate3d(2px, 0, 0);
+  }
+  30%, 50%, 70% {
+    transform: translate3d(-4px, 0, 0);
+  }
+  40%, 60% {
+    transform: translate3d(4px, 0, 0);
+  }
+}
+.apply-shake {
+  animation: shake 0.82s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+}
+
+/* Popup */
+.popup {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  padding: 20px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+  border-radius: 10px;
+  text-align: center;
+}
+
+.popup-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+#close-popup {
+  cursor: pointer;
+  font-size: 20px;
+  font-weight: bold;
+}/*# sourceMappingURL=styles.css.map */
