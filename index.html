@@ -22,10 +22,25 @@
             overflow: hidden;
         }
 
+        .hud {
+            display: flex;
+            width: 95vw;
+            margin-top: 32px;
+            justify-content: space-between;
+        }
+
         .ball {
             width: 20px;
             height: 20px;
             background-color: #068413;
+            border-radius: 50%;
+            position: absolute;
+        }
+
+        .increment {
+            width: 20px;
+            height: 20px;
+            background-color: #00ffa6;
             border-radius: 50%;
             position: absolute;
         }
@@ -79,13 +94,52 @@
         .apply-shake {
             animation: shake 0.82s cubic-bezier(.36, .07, .19, .97) both;
         }
+
+        /* Popup */
+        .popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            padding: 20px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .popup-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+
+        #close-popup {
+            cursor: pointer;
+            font-size: 20px;
+            font-weight: bold;
+        }
     </style>
 </head>
 
 <body>
-    <div id="score"></div>
-    <div id="distance"></div>
+    <div class="hud">
+        <div id="score"></div>
+        <div id="distance"></div>
+    </div>
+
     <div id="container"></div>
+
+    <div id="popup" class="popup">
+        <div class="popup-content">
+            <span id="close-popup">&times;</span>
+            <p id="popup-text"></p>
+        </div>
+    </div>
+
     <script>
         var score = 0;
         var scoreDistance = 0;
@@ -166,6 +220,8 @@
                     container.classList.add("apply-shake");
                     score -= 10;
                     scoreElement.innerText = "score: " + score;
+                    showPopup(this.type);
+
                     setTimeout(() => {
                         container.classList.remove("apply-shake");
                     }, 820);
@@ -186,6 +242,51 @@
             }
         }
 
+        class Increment {
+            constructor(container, yp) {
+                this.container = container;
+                this.increment = document.createElement('div');
+                this.increment.className = 'increment ';
+                this.container.appendChild(this.increment);
+
+                this.x = containerWidth;
+                this.y = yp;
+                this.dx = -2;
+                this.incrementRadius = 10;
+
+                this.increment.style.left = this.x - this.incrementRadius + 'px';
+                this.increment.style.top = this.y - this.incrementRadius + 'px';
+
+                this.moveIncrement = this.moveIncrement.bind(this);
+                this.interval = setInterval(this.moveIncrement, 10);
+            }
+
+            moveIncrement() {
+                if (this.x + this.dx < 0) {
+                    clearInterval(this.interval);
+                    this.container.removeChild(this.increment);
+                    return;
+                }
+                if (this.checkCollision(ball1)) {
+                    score += 10;
+                    scoreElement.innerText = "score: " + score;
+                    clearInterval(this.interval);
+                    this.container.removeChild(this.increment);
+                }
+
+                this.x += this.dx;
+                this.increment.style.left = this.x - this.incrementRadius + 'px';
+            }
+
+            checkCollision(ball) {
+                const distX = this.x - ball.x;
+                const distY = this.y - ball.y;
+                const distance = Math.sqrt(distX * distX + distY * distY);
+
+                return distance < this.incrementRadius + ball.ballRadius;
+            }
+        }
+
         function spawnNegative() {
             const center = containerHeight / 2;
             const levels = [center - 50, center, center + 50];
@@ -198,7 +299,36 @@
             new Negative(container, randomLevel, randomType);
         }
 
+        function spawnIncrement() {
+            const center = containerHeight / 2;
+            const levels = [center - 50, center, center + 50];
+            const randomLevel = levels[Math.floor(Math.random() * levels.length)];
 
+            new Increment(container, randomLevel);
+        }
+
+        // popup 
+        function showPopup(type) {
+            const popup = document.getElementById('popup');
+            const popupText = document.getElementById('popup-text');
+
+            const messages = {
+                sac: "Un sac plastique ! Cela peut être confondu avec une méduse et être ingéré par une tortue.",
+                filet: "Un filet de pêche ! Les tortues peuvent s'y retrouver piégées.",
+                requin: "Un requin ! Attention aux prédateurs naturels."
+            };
+
+            popupText.innerText = messages[type] || "Danger inconnu !";
+            popup.style.display = 'block';
+
+            // Fermer la popup au clic sur la croix
+            document.getElementById('close-popup').onclick = function () {
+                popup.style.display = 'none';
+            };
+        }
+
+
+        setInterval(spawnIncrement, 1000);
         setInterval(spawnNegative, 2000);
 
         setInterval(() => {
@@ -208,7 +338,6 @@
 
         const ball1 = new Ball(container, 0.02, 0.5);
     </script>
-
 </body>
 
 </html>
