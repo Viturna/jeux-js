@@ -1,3 +1,6 @@
+let isPaused = false;
+let openedPopups = new Set()
+
 var score = 0;
 var scoreDistance = 0;
 const scoreElement = document.getElementById("score");
@@ -68,6 +71,8 @@ class Negative {
   }
 
   moveNegative() {
+    if (isPaused) return;
+
     if (this.x + this.dx < 0) {
       clearInterval(this.interval);
       this.container.removeChild(this.negative);
@@ -119,6 +124,7 @@ class Increment {
   }
 
   moveIncrement() {
+    if (isPaused) return;
     if (this.x + this.dx < 0) {
       clearInterval(this.interval);
       this.container.removeChild(this.increment);
@@ -166,6 +172,7 @@ function spawnIncrement() {
 
 // popup
 function showPopup(type) {
+  if (openedPopups.has(type)) return;
   const popup = document.getElementById("popup");
   const popupText = document.getElementById("popup-text");
 
@@ -178,9 +185,13 @@ function showPopup(type) {
   popupText.innerText = messages[type] || "Danger inconnu !";
   popup.style.display = "block";
 
-  // Fermer la popup au clic sur la croix
+  isPaused = true;
+  openedPopups.add(type);
+
+  // Fermer la popup
   document.getElementById("close-popup").onclick = function () {
     popup.style.display = "none";
+    isPaused = false;
   };
 }
 
@@ -188,8 +199,10 @@ setInterval(spawnIncrement, 1000);
 setInterval(spawnNegative, 2000);
 
 setInterval(() => {
-  scoreDistance += 1;
-  distanceElement.innerText = "Distance: " + scoreDistance + "m";
+  if (!isPaused) {
+    scoreDistance += 1;
+    distanceElement.innerText = "Distance: " + scoreDistance + "m";
+  }
 }, 400);
 
 const ball1 = new Ball(container, 0.02, 0.5);
