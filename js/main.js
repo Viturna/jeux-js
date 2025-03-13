@@ -1,5 +1,5 @@
 let isPaused = false;
-let openedPopups = new Set()
+let openedPopups = new Set();
 
 var score = 0;
 var scoreDistance = 0;
@@ -12,12 +12,6 @@ distanceElement.innerText = "Distance: " + scoreDistance + "m";
 
 const containerWidth = container.clientWidth;
 const containerHeight = container.clientHeight;
-const messages = fetch("../content/messages.json")
-  .then((response) => response.json())
-  .then((messages) => {
-    console.log(messages);
-  })
-  .catch((error) => console.error("Erreur de chargement du JSON:", error));
 
 class Ball {
   constructor(container, xp, yp) {
@@ -161,7 +155,7 @@ function spawnNegative() {
   const levels = [center - 50, center, center + 50];
   const randomLevel = levels[Math.floor(Math.random() * levels.length)];
 
-  const types = ["sac", "filet", "requin"];
+  const types = ["sac", "filet", "maree"];
 
   const randomType = types[Math.floor(Math.random() * types.length)];
 
@@ -177,28 +171,32 @@ function spawnIncrement() {
 }
 
 // popup
-function showPopup(type) {
+async function showPopup(type) {
   if (openedPopups.has(type)) return;
-  const popup = document.getElementById("popup");
-  const popupText = document.getElementById("popup-text");
 
-  const messages = {
-    sac: "Un sac plastique ! Cela peut être confondu avec une méduse et être ingéré par une tortue.",
-    filet: "Un filet de pêche ! Les tortues peuvent s'y retrouver piégées.",
-    requin: "Un requin ! Attention aux prédateurs naturels.",
-  };
+  try {
+    const response = await fetch("../content/messages.json");
+    const messages = await response.json();
+    console.log(messages.sac);
 
-  popupText.innerText = messages[type] || "Danger inconnu !";
-  popup.style.display = "block";
+    const popup = document.getElementById("popup");
+    const popupText = document.getElementById("popup-text");
+    const popupLink = document.getElementById("popup--link");
 
-  isPaused = true;
-  openedPopups.add(type);
+    popupText.innerText = messages[type]?.message || "Danger inconnu !";
+    popupLink.href = messages[type]?.link || "#";
+    popup.style.display = "block";
 
-  // Fermer la popup
-  document.getElementById("close-popup").onclick = function () {
-    popup.style.display = "none";
-    isPaused = false;
-  };
+    isPaused = true;
+    openedPopups.add(type);
+
+    document.getElementById("close-popup").onclick = () => {
+      popup.style.display = "none";
+      isPaused = false;
+    };
+  } catch (error) {
+    console.error("Erreur de chargement du JSON:", error);
+  }
 }
 
 setInterval(spawnIncrement, 1000);
