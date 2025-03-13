@@ -9,6 +9,12 @@ distanceElement.innerText = "Distance: " + scoreDistance + "m";
 
 const containerWidth = container.clientWidth;
 const containerHeight = container.clientHeight;
+const messages = fetch("../content/messages.json")
+  .then((response) => response.json())
+  .then((messages) => {
+    console.log(messages);
+  })
+  .catch((error) => console.error("Erreur de chargement du JSON:", error));
 
 class Ball {
   constructor(container, xp, yp) {

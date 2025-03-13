@@ -1,0 +1,17 @@
+{
+  "sac": {
+    "name": "sac plastique",
+    "message": "Un sac plastique ! Cela peut être confondu avec une méduse et être ingéré par une tortue.",
+    "link": "https://www.wwf.fr/sengager-ensemble/relayer-campagnes/pollution-plastique"
+  },
+  "filet": {
+    "name": "filet de pêche",
+    "message": "Un filet de pêche ! Les tortues peuvent s'y retrouver piégées.",
+    "link": "https://www.wwf.fr/champs-daction/ocean/peche-aquaculture/prises-accessoires"
+  },
+  "maree": {
+    "name": "marée noire",
+    "message": "Un requin ! Attention aux prédateurs naturels.",
+    "link": "https://www.wwf.fr/vous-informer/actualites/pollution-marine"
+  }
+}
