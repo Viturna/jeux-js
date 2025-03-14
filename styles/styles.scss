@@ -53,13 +53,33 @@ body {
   transform: scale(1.5);
 }
 
-.negative.filet {
+.negative.filter {
+  background-color: #583828;
+  transform: scale(1.5);
+}
+
+.negative.maree {
   background-color: #0066cc;
   border-radius: 10%;
 }
 
-.negative.requin {
+.negative.frigo {
   background-color: #00cccc;
+}
+
+.trash {
+  width: 40px;
+  height: 40px;
+  background-color: #ff0000;
+  /* Image d'un déchet */
+  background-size: cover;
+  position: absolute;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.trash:hover {
+  transform: scale(1.2);
 }
 
 @keyframes shake {

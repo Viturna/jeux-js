@@ -11,7 +11,16 @@
   },
   "maree": {
     "name": "marée noire",
-    "message": "Un requin ! Attention aux prédateurs naturels.",
+    "message": "Une maréee noir !",
     "link": "https://www.wwf.fr/vous-informer/actualites/pollution-marine"
+  },
+  "frigo": {
+    "name": "frigo",
+    "message": "Un frigo !",
+    "link": "https://www.wwf.fr/vous-informer/actualites/pollution-marine"
+  },
+  "fin_jeu": {
+    "message": "Félicitations, vous avez terminé le jeu !",
+    "link": "#"
   }
 }
