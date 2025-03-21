@@ -1,19 +1,64 @@
-@charset "UTF-8";
 body {
   display: flex;
   align-items: center;
   flex-direction: column;
   gap: 32px;
   justify-content: center;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.overlay {
+  position: absolute;
+  width: 100%;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 99;
+}
+
+.play-button {
+  padding: 16px 32px;
+  background-color: #2e2e2e;
+  color: #FFF;
+  border-radius: 3px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 999;
+  border: none;
+  cursor: pointer;
 }
 
 #container {
-  width: 95vw;
-  height: 600px;
-  border: 1px solid black;
-  background-color: #1DA2D8;
+  width: 100%;
+  height: 70vh;
+  background: linear-gradient(to bottom, #87CEEB 50%, #1E90FF 60%, #004488 100%);
   position: relative;
   overflow: hidden;
+}
+
+#sable {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 5%;
+  background: sandybrown;
+  transition: height 3s ease-in-out;
+  z-index: 1;
+}
+
+.environnement {
+  position: relative;
+  width: 100%;
+}
+
+.turtle {
+  width: 40px;
+  height: 40px;
+  position: absolute;
+  background-image: url("../assets/turtle-sprite.png");
+  background-size: 80px 40px;
+  z-index: 2;
 }
 
 .hud {
@@ -23,33 +68,27 @@ body {
   justify-content: space-between;
 }
 
-.ball {
-  width: 20px;
-  height: 20px;
-  background-color: #068413;
-  border-radius: 50%;
-  position: absolute;
-}
-
 .increment {
-  width: 20px;
-  height: 20px;
-  background-color: #00ffa6;
-  border-radius: 50%;
+  background-image: url("../assets/meduse.png");
+  background-size: 50px;
+  width: 50px;
+  height: 50px;
   position: absolute;
+  z-index: 2;
 }
 
 .negative {
   width: 20px;
   height: 20px;
-  background-color: #ff0000;
-  border-radius: 50%;
   position: absolute;
 }
 
 .negative.sac {
-  background-color: #ff5500;
-  transform: scale(1.5);
+  background-image: url("../assets/sac.png");
+  background-size: 50px;
+  width: 50px;
+  height: 50px;
+  z-index: 2;
 }
 
 .negative.filter {
@@ -57,24 +96,35 @@ body {
   transform: scale(1.5);
 }
 
+.negative.filet {
+  background-image: url("../assets/filet.png");
+  background-size: 50px;
+  width: 50px;
+  height: 50px;
+  z-index: 2;
+}
+
 .negative.maree {
   background-color: #0066cc;
-  border-radius: 10%;
+  border-radius: 100%;
 }
 
 .negative.frigo {
-  background-color: #00cccc;
+  background-image: url("../assets/frigo.png");
+  background-size: 50px;
+  width: 50px;
+  height: 50px;
+  z-index: 2;
 }
 
 .trash {
-  width: 40px;
-  height: 40px;
-  background-color: #ff0000;
-  /* Image d'un déchet */
+  width: 60px;
+  height: 60px;
   background-size: cover;
   position: absolute;
   cursor: pointer;
   transition: transform 0.2s ease;
+  z-index: 2;
 }
 
 .trash:hover {

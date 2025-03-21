@@ -11,10 +11,18 @@
 <body>
     <div class="hud">
         <div id="score"></div>
+        <button id="toggleSound">🔊</button>
         <div id="distance"></div>
     </div>
+    <div id="overlay" class="overlay">
+        <button id="playButton" class="play-button">Play</button>
+    </div>
 
-    <div id="container"></div>
+
+    <div class="environnement">
+        <div id="sable"></div>
+        <div id="container"></div>
+    </div>
 
     <div id="popup" class="popup">
         <div class="popup-content">
@@ -23,6 +31,12 @@
             <a href="#" id="popup--link" target="_blank" rel="noreferrer noopener">En savoir plus</a>
         </div>
     </div>
+
+    <audio id="oceanSound" loop>
+        <source src="/assets/ocean.mp3" type="audio/mpeg">
+        Votre navigateur ne supporte pas l'élément audio.
+    </audio>
+
     <script src="js/main.js"></script>
 </body>
 
